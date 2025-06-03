@@ -1,16 +1,5 @@
-# # Étape de build
-# FROM node:18 AS builder
-# WORKDIR /app
-# COPY . .
-# RUN npm install
-# RUN npm run build
-
-# # Étape de production
-# FROM nginx:alpine
-# COPY --from=builder /app/dist /usr/share/nginx/html
-# EXPOSE 80
-# CMD ["nginx", "-g", "daemon off;"]
-FROM node:18-alpine
+# Build stage
+FROM node:18-alpine AS build
 
 WORKDIR /app
 
@@ -19,6 +8,13 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 4000
+RUN npm run build
 
-CMD ["npm", "run", "dev", "--", "--host"]
+# Production stage
+FROM nginx:alpine
+
+COPY --from=build /app/dist /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
