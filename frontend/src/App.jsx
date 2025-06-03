@@ -7,6 +7,7 @@ function App() {
   const [newTask, setNewTask] = useState("")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://docker-iim.onrender.com/api';
 
   // Récupération des tâches au chargement
   useEffect(() => {
@@ -16,7 +17,7 @@ function App() {
   const fetchTasks = async () => {
     try {
       setLoading(true)
-      const response = await fetch("https://docker-iim.onrender.com/api/tasks")
+      const response = await fetch(`${API_BASE_URL}/tasks`)
       if (!response.ok) throw new Error("Erreur lors du chargement des tâches")
       const data = await response.json()
       setTasks(data)
@@ -33,7 +34,7 @@ function App() {
 
     try {
       setLoading(true)
-      const response = await fetch("https://docker-iim.onrender.com/api/tasks", {
+      const response = await fetch(`${API_BASE_URL}/tasks`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title: newTask.trim() }),
@@ -55,7 +56,7 @@ function App() {
   const deleteTask = async (id) => {
     try {
       setLoading(true)
-      const response = await fetch(`https://docker-iim.onrender.com/api/tasks/${id}`, { method: "DELETE" })
+      const response = await fetch(`${API_BASE_URL}/tasks/${id}`, { method: "DELETE" })
 
       if (!response.ok) throw new Error("Erreur lors de la suppression")
 
