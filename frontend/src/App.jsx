@@ -16,7 +16,7 @@ function App() {
   const fetchTasks = async () => {
     try {
       setLoading(true)
-      const response = await fetch("/api/tasks")
+      const response = await fetch("https://docker-iim.onrender.com/api/tasks")
       if (!response.ok) throw new Error("Erreur lors du chargement des tâches")
       const data = await response.json()
       setTasks(data)
@@ -33,7 +33,7 @@ function App() {
 
     try {
       setLoading(true)
-      const response = await fetch("/api/tasks", {
+      const response = await fetch("https://docker-iim.onrender.com/api/tasks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title: newTask.trim() }),
@@ -55,7 +55,7 @@ function App() {
   const deleteTask = async (id) => {
     try {
       setLoading(true)
-      const response = await fetch(`/api/tasks/${id}`, { method: "DELETE" })
+      const response = await fetch(`https://docker-iim.onrender.com/api/tasks/${id}`, { method: "DELETE" })
 
       if (!response.ok) throw new Error("Erreur lors de la suppression")
 
