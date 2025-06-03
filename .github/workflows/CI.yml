@@ -65,7 +65,7 @@ jobs:
   docker-deploy:
     needs: build-and-test
     runs-on: ubuntu-latest
-    environnement: DOCKER_USERNAME
+    environment: DOCKER_USERNAME
 
     steps:
       - name: Checkout code
